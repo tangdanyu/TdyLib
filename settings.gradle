@@ -9,3 +9,4 @@ dependencyResolutionManagement {
 rootProject.name = "TdyLib"
 include ':app'
 include ':yuvlib'
+include ':opencv430'
