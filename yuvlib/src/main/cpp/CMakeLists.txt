@@ -15,4 +15,7 @@ find_library(log-lib
         log)
 
 # 把 yuv (这个是 libyuv 子项目生成的 yuv.so) 和 log 库链接到 yuvutil 中
-target_link_libraries(yuvlib ${log-lib} yuv)
+target_link_libraries(yuvlib
+        ${log-lib}
+        jnigraphics
+        yuv)
