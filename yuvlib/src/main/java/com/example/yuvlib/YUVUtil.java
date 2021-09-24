@@ -26,7 +26,7 @@ public class YUVUtil {
     /**
      * 将 ARGB 转 I420
      */
-    public static native void convertARGBToI420(byte[] src, byte[] dst, int width, int height);
+    public static native void convertARGBMacToI420(byte[] src, byte[] dst, int width, int height);
 
     /**
      * 将 RGB24 转 I420
@@ -42,11 +42,19 @@ public class YUVUtil {
      * 将 YUY2 转 I420
      */
     public static native void convertYUY2ToI420(byte[] src, byte[] dst, int width, int height);
+    /**
+     * 将 YV12 转 I420
+     */
+    public static native void convertYV12ToI420(byte[] src, byte[] dst, int width, int height);
 
     /**
      * 将 NV12 转 I420
      */
     public static native void convertNV12ToI420(byte[] src, byte[] dst, int width, int height);
+    /**
+     * 将 NV12 转 I420 , 同时旋转
+     */
+    public static native void convertNV12ToI420AndRotate(byte[] src, byte[] dst, int width, int height,int degree);
 
     /**
      * 将 NV12 转 RGB565
@@ -102,12 +110,16 @@ public class YUVUtil {
     /**
      * 将 I420 转 ARGB
      */
-    public static native void convertI420ToARGB(byte[] src, byte[] dst, int width, int height);
-
+    public static native void convertI420ToARGB(byte[] src, byte[] dst, int width, int height,int dst_stride);
     /**
      * 将 I420 转 ARGB
      */
-    public static native void convertI420ToARGBMac(byte[] src, byte[] dst, int width, int height);
+    public static native void convertI420ToARGBMac(byte[] src, byte[] dst, int width, int height,int dst_stride);
+
+    /**
+     * 将 I420 转 RGBA
+     */
+    public static native void convertI420ToRGBAMac(byte[] src, byte[] dst, int width, int height,int dst_stride);
 
     /**
      * 将 I420 转 RGBA
@@ -119,7 +131,7 @@ public class YUVUtil {
      * 将 I420 转 RGBA
      * dst_stride 跨距，可传入0或width
      */
-    public static native void convertI420ToRGBAPhone(byte[] src, byte[] dst, int width, int height, int dst_stride);
+    public static native void convertI420ToRGBAIPhone(byte[] src, byte[] dst, int width, int height, int dst_stride);
 
     /**
      * 将 I420 转 ARGB4444

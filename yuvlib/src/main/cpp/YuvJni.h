@@ -10,11 +10,13 @@
 #define YUV_JNI_METHOD(METHOD_NAME) Java_com_example_yuvlib_YUVUtil_##METHOD_NAME
 extern "C" {
 JNIEXPORT void JNICALL YUV_JNI_METHOD(convertRGB24ToARGB)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint ,jint );
-JNIEXPORT void JNICALL YUV_JNI_METHOD(convertARGBToI420)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint  );
+JNIEXPORT void JNICALL YUV_JNI_METHOD(convertARGBMacToI420)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint  );
 JNIEXPORT void JNICALL YUV_JNI_METHOD(convertRGB24ToI420)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint  );
 JNIEXPORT void JNICALL YUV_JNI_METHOD(convertUYVYToI420)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint  );
 JNIEXPORT void JNICALL YUV_JNI_METHOD(convertYUY2ToI420)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint  );
+JNIEXPORT void JNICALL YUV_JNI_METHOD(convertYV12ToI420)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint  );
 JNIEXPORT void JNICALL YUV_JNI_METHOD(convertNV12ToI420)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint  );
+JNIEXPORT void JNICALL YUV_JNI_METHOD(convertNV12ToI420AndRotate)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint,jint , jint  );
 JNIEXPORT void JNICALL YUV_JNI_METHOD(convertNV12ToRGB565)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint  );
 JNIEXPORT void JNICALL YUV_JNI_METHOD(convertNV21ToBitmap)(JNIEnv *, jclass , jbyteArray ,jobject , jint , jint  );
 JNIEXPORT void JNICALL YUV_JNI_METHOD(convertNV21ToI420AndRotate)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint ,jint );
@@ -24,10 +26,11 @@ JNIEXPORT void JNICALL YUV_JNI_METHOD(convertI420ToNV12AndRotate)(JNIEnv *, jcla
 JNIEXPORT void JNICALL YUV_JNI_METHOD(convertI420ToNV21)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint  );
 JNIEXPORT void JNICALL YUV_JNI_METHOD(convertI420ToNV21AndRotate)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint ,jint );
 JNIEXPORT void JNICALL YUV_JNI_METHOD(convertI420ToRGB24)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint  );
-JNIEXPORT void JNICALL YUV_JNI_METHOD(convertI420ToARGB)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint  );
-JNIEXPORT void JNICALL YUV_JNI_METHOD(convertI420ToARGBMac)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint  );
+JNIEXPORT void JNICALL YUV_JNI_METHOD(convertI420ToARGB)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint ,jint );
+JNIEXPORT void JNICALL YUV_JNI_METHOD(convertI420ToARGBMac)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint ,jint );
+JNIEXPORT void JNICALL YUV_JNI_METHOD(convertI420ToRGBAMac)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint,jint  );
 JNIEXPORT void JNICALL YUV_JNI_METHOD(convertI420ToRGBA)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint ,jint );
-JNIEXPORT void JNICALL YUV_JNI_METHOD(convertI420ToRGBAPhone)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint ,jint );
+JNIEXPORT void JNICALL YUV_JNI_METHOD(convertI420ToRGBAIPhone)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint ,jint );
 JNIEXPORT void JNICALL YUV_JNI_METHOD(convertI420ToARGB4444)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint ,jint );
 JNIEXPORT void JNICALL YUV_JNI_METHOD(convertI420ToRGB565)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint  );
 JNIEXPORT void JNICALL YUV_JNI_METHOD(convertI420ToRGB565Android)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint  );

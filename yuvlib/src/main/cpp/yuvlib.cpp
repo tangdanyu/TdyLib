@@ -261,9 +261,3 @@ Java_com_example_yuvlib_YUVUtil_convertI420ToBitmap(JNIEnv *env, jclass clazz, j
     env->ReleaseByteArrayElements(src, i420_src, 0);
 }
 
-void
-Java_com_example_yuvlib_YUVUtil_convertRGB24ToARGB(JNIEnv *, jclass, jbyteArray, jbyteArray, jint,
-                                                   jint, jint) {
-
-}
-

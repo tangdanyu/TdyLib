@@ -9,6 +9,8 @@ add_subdirectory(libyuv ./build)
 
 # 生成动态链接库 yuvutil,  YuvJni.cpp 是我们的源代码，可以指定多个源文件。
 add_library(yuvlib SHARED
+        YuvConvert.cpp
+        YuvConvert.h
         YuvJni.cpp
         YuvJni.h
         yuvlib.cpp)
