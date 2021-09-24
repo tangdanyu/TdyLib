@@ -8,7 +8,10 @@ include_directories(libyuv/include)
 add_subdirectory(libyuv ./build)
 
 # 生成动态链接库 yuvutil,  YuvJni.cpp 是我们的源代码，可以指定多个源文件。
-add_library(yuvlib SHARED yuvlib.cpp)
+add_library(yuvlib SHARED
+        YuvJni.cpp
+        YuvJni.h
+        yuvlib.cpp)
 
 # 添加NDK里面 编译好的  log 库
 find_library(log-lib
