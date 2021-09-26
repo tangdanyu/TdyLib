@@ -1,4 +1,5 @@
-package com.example.tdylib.view;
+package com.example.cameralib.view;
+
 
 import android.content.Context;
 import android.util.AttributeSet;

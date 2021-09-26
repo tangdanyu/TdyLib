@@ -12,8 +12,7 @@ add_library(yuvlib SHARED
         YuvConvert.cpp
         YuvConvert.h
         YuvJni.cpp
-        YuvJni.h
-        yuvlib.cpp)
+        YuvJni.h)
 
 # 添加NDK里面 编译好的  log 库
 find_library(log-lib

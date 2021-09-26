@@ -1,25 +1,19 @@
-package com.example.tdylib.camera1;
+package com.example.cameralib.camera1;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
-import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
-import android.graphics.YuvImage;
 import android.hardware.Camera;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
 
-import com.example.tdylib.listener.CameraListener;
-import com.example.tdylib.view.AutoFitTextureView;
-import com.example.yuvlib.YUVUtil;
 
-import java.io.ByteArrayOutputStream;
+import com.example.cameralib.view.AutoFitTextureView;
+import com.example.cameralib.MyLogUtil;
+import com.example.cameralib.listener.CameraListener;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -27,7 +21,7 @@ import java.util.List;
 /**
  * 相机辅助类，和{@link CameraListener}共同使用，获取nv21数据等操作
  */
-public class Camera1Helper implements Camera.PreviewCallback ,Camera.PictureCallback{
+public class Camera1Helper implements Camera.PreviewCallback,Camera.PictureCallback{
     private String TAG = "CameraHelper";
     private static final int INVALID_CAMERA_ID = -1;
     //相机id
@@ -68,9 +62,12 @@ public class Camera1Helper implements Camera.PreviewCallback ,Camera.PictureCall
 
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture texture, int width, int height) {
+            MyLogUtil.e(TAG, "onSurfaceTextureAvailable: width=" + width + ", height=" + height);//1080 2160
+//            openCamera();    // SurfaceTexture就绪后回调执行打开相机操作
             if (mCamera != null) {
                 surfaceWidth = height;
                 surfaceHeight = width;
+                MyLogUtil.e(TAG, "surfaceChanged surfaceWidth" + surfaceWidth + " surfaceHeight" + surfaceHeight);
                 setPreview();
                 adjustCameraParameters();
             }
@@ -103,6 +100,7 @@ public class Camera1Helper implements Camera.PreviewCallback ,Camera.PictureCall
             if (mCamera != null) {
                 surfaceWidth = height;
                 surfaceHeight = width;
+                MyLogUtil.e(TAG, "surfaceChanged surfaceWidth" + surfaceWidth + " surfaceHeight" + surfaceHeight);
                 setPreview();
                 adjustCameraParameters();
             }
@@ -141,6 +139,7 @@ public class Camera1Helper implements Camera.PreviewCallback ,Camera.PictureCall
 
     //打开 Camera 对象 打开相机的操作可以推迟到 onResume() 方法，这样便于重用代码并尽可能简化控制流程。
     private void start() {
+        MyLogUtil.e(TAG,"start");
         synchronized (this) {
             if (mCamera != null) {
                 return;
@@ -293,6 +292,7 @@ public class Camera1Helper implements Camera.PreviewCallback ,Camera.PictureCall
         if (closelySize != null) {
             surfaceHeight = closelySize.height;
             surfaceWidth = closelySize.width;
+            MyLogUtil.e(TAG, "预览尺寸修改为：" + closelySize.width + "*" + closelySize.height);
             if (cameraListener != null) {
                 cameraListener.onCameraOpened(closelySize.width, closelySize.height, calcCameraRotation(mDisplayOrientation));
             }

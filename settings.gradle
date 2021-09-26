@@ -10,3 +10,4 @@ rootProject.name = "TdyLib"
 include ':app'
 include ':yuvlib'
 include ':opencv430'
+include ':cameralib'
