@@ -148,11 +148,15 @@ public class Camera2Helper {
         private byte[] y;
         private byte[] u;
         private byte[] v;
+        private byte[] mYuvBytes;
 
         @Override
         public void onImageAvailable(ImageReader reader) {
             //我们可以将这帧数据转成字节数组，类似于Camera1的PreviewCallback回调的预览帧数据
             Image image = reader.acquireLatestImage();
+            if (image == null) {
+                return;
+            }
             // 实际结果一般是 Y:U:V == 4:2:2
             if (image.getFormat() == ImageFormat.YUV_420_888) {
                 Image.Plane[] planes = image.getPlanes();
@@ -168,14 +172,42 @@ public class Camera2Helper {
                     planes[2].getBuffer().get(v);
                     mCameraListener.onPreview(y, u, v, mPreviewSize, planes[0].getRowStride());
                 }
-                ByteBuffer buffer = image.getPlanes()[0].getBuffer();
-                byte[] data = new byte[buffer.remaining()];
-                buffer.get(data);
-                if (image == null) {
-                    return;
+
+                int width = image.getWidth();
+                int height = image.getHeight();
+
+                if (mYuvBytes == null) {
+                    // YUV420 大小总是 width * height * 3 / 2
+                    mYuvBytes = new byte[width * height * 3 / 2];
+                }
+
+                // Y通道，对应planes[0]
+                // Y size = width * height
+                // yBuffer.remaining() = width * height;
+                // pixelStride = 1
+                ByteBuffer yBuffer = planes[0].getBuffer();
+                int yLen = width * height;
+                yBuffer.get(mYuvBytes, 0, yLen);
+                // U通道，对应planes[1]
+                // U size = width * height / 4;
+                // uBuffer.remaining() = width * height / 2;
+                // pixelStride = 2
+                ByteBuffer uBuffer = planes[1].getBuffer();
+                int pixelStride = planes[1].getPixelStride(); // pixelStride = 2
+                for (int i = 0; i < uBuffer.remaining(); i+=pixelStride) {
+                    mYuvBytes[yLen++] = uBuffer.get(i);
+                }
+                // V通道，对应planes[2]
+                // V size = width * height / 4;
+                // vBuffer.remaining() = width * height / 2;
+                // pixelStride = 2
+                ByteBuffer vBuffer = planes[2].getBuffer();
+                pixelStride = planes[2].getPixelStride(); // pixelStride = 2
+                for (int i = 0; i < vBuffer.remaining(); i+=pixelStride) {
+                    mYuvBytes[yLen++] = vBuffer.get(i);
                 }
                 if (mCameraListener != null) {
-                    mCameraListener.onCameraPreview(data, mPreviewSize.getWidth(), mPreviewSize.getHeight(), mOrientation);
+                    mCameraListener.onCameraPreview(mYuvBytes, mPreviewSize.getWidth(), mPreviewSize.getHeight(), mOrientation);
                 }
             }
             image.close(); // 这里一定要close，不然预览会卡死
@@ -415,7 +447,7 @@ public class Camera2Helper {
         try {
             // 输入相机的尺寸必须是相机支持的尺寸，这样画面才能不失真，TextureView输入相机的尺寸也是这个
             mImageReader = ImageReader.newInstance(mPreviewSize.getWidth(), mPreviewSize.getHeight(),
-                    imageFormat, /*maxImages*/1);
+                    imageFormat, /*maxImages*/2);
             mImageReader.setOnImageAvailableListener(   // 设置监听和后台线程处理器
                     mOnImageAvailableListener, mBackgroundHandler);
             // 获取用来预览的texture实例
@@ -492,7 +524,7 @@ public class Camera2Helper {
         }
         // 输入相机的尺寸必须是相机支持的尺寸，这样画面才能不失真，TextureView输入相机的尺寸也是这个
         mImageReader = ImageReader.newInstance(selectPreviewSize.getWidth(), selectPreviewSize.getHeight(),
-                imageFormat, /*maxImages*/1);
+                imageFormat, /*maxImages*/2);
         mImageReader.setOnImageAvailableListener(   // 设置监听和后台线程处理器
                 mOnImageAvailableListener, mBackgroundHandler);
         setMediaRecorderConfig(selectPreviewSize.getWidth(), selectPreviewSize.getHeight());

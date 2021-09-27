@@ -421,12 +421,12 @@ void NV12ToI420(jbyte *src_nv21_data, jint width, jint height, jbyte *dst_i420_d
             width, height);
 }
 
-void I420ToNv21(jbyte *src_i420_data, jint width, jint height, jbyte *src_nv21_data) {
+void I420ToNv21(jbyte *src_i420_data, jint width, jint height, jbyte *dst_nv21_data) {
     jint src_y_size = width * height;
     jint src_u_size = (width >> 1) * (height >> 1);
 
-    jbyte *src_nv21_y_data = src_nv21_data;
-    jbyte *src_nv21_uv_data = src_nv21_data + src_y_size;
+    jbyte *dst_nv21_y_data = dst_nv21_data;
+    jbyte *dst_nv21_uv_data = dst_nv21_data + src_y_size;
 
     jbyte *src_i420_y_data = src_i420_data;
     jbyte *src_i420_u_data = src_i420_data + src_y_size;
@@ -437,8 +437,8 @@ void I420ToNv21(jbyte *src_i420_data, jint width, jint height, jbyte *src_nv21_d
             (uint8_t *) src_i420_y_data, width,
             (uint8_t *) src_i420_u_data, width >> 1,
             (uint8_t *) src_i420_v_data, width >> 1,
-            (uint8_t *) src_nv21_y_data, width,
-            (uint8_t *) src_nv21_uv_data, width,
+            (uint8_t *) dst_nv21_y_data, width,
+            (uint8_t *) dst_nv21_uv_data, width,
             width, height);
 }
 

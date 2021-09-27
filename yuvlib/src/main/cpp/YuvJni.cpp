@@ -188,8 +188,9 @@ JNIEXPORT void JNICALL
 Java_com_example_yuvlib_YUVUtil_convertI420ToNV21(JNIEnv *env, jclass clazz, jbyteArray src,
                                                   jbyteArray dst, jint width, jint height) {
 
-    jbyte *src_i420_data = env->GetByteArrayElements(src, NULL);
-    jbyte *dst_nv21_data = env->GetByteArrayElements(dst, NULL);
+    jbyte *src_i420_data = env->GetByteArrayElements(src, JNI_FALSE);
+    jbyte *dst_nv21_data = env->GetByteArrayElements(dst, JNI_FALSE);
+
     I420ToNv21(src_i420_data, width, height, dst_nv21_data);
     // 释放资源
     env->ReleaseByteArrayElements(src, src_i420_data, 0);
