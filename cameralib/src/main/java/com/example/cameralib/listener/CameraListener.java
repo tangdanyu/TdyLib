@@ -2,6 +2,7 @@ package com.example.cameralib.listener;
 
 
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.util.Size;
 
 public interface CameraListener {
@@ -11,11 +12,12 @@ public interface CameraListener {
     //相机关闭
     default  void onCameraClosed(){}
 
-    //相机数据
+    //相机数据camera1
     void onCameraPreview(byte[] data, int width, int height, int displayOrientation);
 
     default void onPreview(byte[] y, byte[] u, byte[] v, Size previewSize, int stride) {
     }
+    default void onPreviewFrame(Image image,int width,int height,int orientation){}
 
     default void onPictureTaken(byte[] data) {
     }
