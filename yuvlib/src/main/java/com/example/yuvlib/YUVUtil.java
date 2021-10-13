@@ -217,7 +217,10 @@ public class YUVUtil {
      * I420 旋转
      */
     public static native void rotateI420(byte[] src, byte[] dst, int width, int height, int degree);
-
+    /**
+     * nv21 旋转
+     */
+    public static native void rotateNV21(byte[] src, byte[] dst, int width, int height, int degree);
 }
 
 

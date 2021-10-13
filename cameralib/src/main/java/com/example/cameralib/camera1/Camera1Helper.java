@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
+import android.util.Size;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.TextureView;
@@ -47,6 +48,7 @@ public class Camera1Helper implements Camera.PreviewCallback,Camera.PictureCallb
     //相机参数
     private Camera.Parameters mCameraParameters;
     private Camera.Size previewSize;
+    private Size specialSize;
 
 
     //事件回调
@@ -114,7 +116,7 @@ public class Camera1Helper implements Camera.PreviewCallback,Camera.PictureCallb
 
 
     // 参数设置
-    public Camera1Helper(Context context, CameraListener cameraListener, View previewDisplayView) {
+    public Camera1Helper(Context context, View previewDisplayView,CameraListener cameraListener) {
         this.context = context;
         this.cameraListener = cameraListener;
         this.previewDisplayView = previewDisplayView;
@@ -264,23 +266,34 @@ public class Camera1Helper implements Camera.PreviewCallback,Camera.PictureCallb
             return;
         }
         List<Camera.Size> sizeList = mCameraParameters.getSupportedPreviewSizes();
+        MyLogUtil.e(TAG,"支持的尺寸："+sizeList.toString());
 
         Camera.Size closelySize = null;//储存最合适的尺寸
         for (Camera.Size size : sizeList) { //先查找preview中是否存在与surfaceview相同宽高的尺寸
 //            MyLogUtil.e(TAG, "width" + size.width + " height" + size.height);
 //            MyLogUtil.e(TAG, "surfaceWidth" + surfaceWidth + " surfaceHeight" + surfaceHeight);
-            if ((size.width == surfaceWidth) && (size.height == surfaceHeight)) {
-                closelySize = size;
+            if(specialSize!=null){
+                if ((size.width == specialSize.getWidth()) && (size.height == specialSize.getHeight())) {
+                    closelySize = size;
+                }
+            }else {
+                if ((size.width == surfaceWidth) && (size.height == surfaceHeight)) {
+                    closelySize = size;
+                }
             }
         }
         if (closelySize == null) {
-            // 得到与传入的宽高比最接近的size
-            float reqRatio = ((float) surfaceWidth) / surfaceHeight;
+            float reqRatio; // 得到与传入的宽高比最接近的size
+            if(specialSize!=null){
+                reqRatio = ((float) specialSize.getWidth()) / specialSize.getHeight();
+            }else {
+                reqRatio = ((float) surfaceWidth) / surfaceHeight;
+            }
 //            MyLogUtil.e(TAG, "宽高比 " + reqRatio);
             float curRatio, deltaRatio;
             float deltaRatioMin = Float.MAX_VALUE;
             for (Camera.Size size : sizeList) {
-                if (size.width < 240) continue;//1024表示可接受的最小尺寸，否则图像会很模糊，可以随意修改
+//                if (size.width < 240) continue;//1024表示可接受的最小尺寸，否则图像会很模糊，可以随意修改
                 curRatio = ((float) size.width) / size.height;
                 deltaRatio = Math.abs(reqRatio - curRatio);
                 if (deltaRatio < deltaRatioMin) {
@@ -397,6 +410,18 @@ public class Camera1Helper implements Camera.PreviewCallback,Camera.PictureCallb
         return Camera.CameraInfo.CAMERA_FACING_FRONT == mCameraId;
     }
 
+    //设置特定的预览尺寸
+    public void setPreviewSize(Size size){
+        this.specialSize = size;
+    }
+    public String getPreviewSizeList(){
+        if(mCameraParameters==null){
+            return "相机还没准备好";
+        }
+        List<Camera.Size> sizeList = mCameraParameters.getSupportedPreviewSizes();
+        MyLogUtil.e(TAG,"支持的尺寸："+sizeList.toString());
+        return "支持的尺寸："+sizeList.toString();
+    }
 
     // 预览数据
     @Override

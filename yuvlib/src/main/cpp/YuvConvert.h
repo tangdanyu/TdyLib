@@ -16,6 +16,8 @@ void scaleI420(jbyte *src_i420_data, jint width, jint height, jbyte *dst_i420_da
 
 void rotateI420(jbyte *src_i420_data, jint width, jint height, jbyte *dst_i420_data, jint degree);
 
+void rotateNV21(jbyte *src_i420_data, jint width, jint height, jbyte *dst_i420_data, jint degree);
+
 void RotateI420fff(jbyte *src_i420_data, jint width, jint height,
                    jbyte *dst_i420_data, jint degree);
 

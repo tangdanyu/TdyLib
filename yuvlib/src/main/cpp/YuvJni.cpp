@@ -453,3 +453,13 @@ Java_com_example_yuvlib_YUVUtil_rotateI420(JNIEnv *env, jclass clazz, jbyteArray
     env->ReleaseByteArrayElements(src, src_i420_data, 0);
     env->ReleaseByteArrayElements(dst, dst_i420_data, 0);
 }
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_yuvlib_YUVUtil_rotateNV21(JNIEnv *env, jclass clazz, jbyteArray src,
+                                           jbyteArray dst, jint width, jint height, jint degree) {
+    jbyte *src_i420_data = env->GetByteArrayElements(src, NULL);
+    jbyte *dst_i420_data = env->GetByteArrayElements(dst, NULL);
+    rotateNV21(src_i420_data, width, height, dst_i420_data, degree);
+    env->ReleaseByteArrayElements(src, src_i420_data, 0);
+    env->ReleaseByteArrayElements(dst, dst_i420_data, 0);
+}

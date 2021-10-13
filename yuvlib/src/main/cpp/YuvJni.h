@@ -46,6 +46,7 @@ JNIEXPORT void JNICALL YUV_JNI_METHOD(mirrorI420upDown)(JNIEnv *, jclass , jbyte
 JNIEXPORT void JNICALL YUV_JNI_METHOD(mirrorI420LeftRight)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint ,jint );
 JNIEXPORT void JNICALL YUV_JNI_METHOD(scaleI420)(JNIEnv *, jclass , jbyteArray , jbyteArray ,jint , jint , jint , jint ,jint ) ;
 JNIEXPORT void JNICALL YUV_JNI_METHOD(rotateI420)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint ,jint );
+JNIEXPORT void JNICALL YUV_JNI_METHOD(rotateNV21)(JNIEnv *, jclass , jbyteArray ,jbyteArray , jint , jint ,jint );
 
 
 }

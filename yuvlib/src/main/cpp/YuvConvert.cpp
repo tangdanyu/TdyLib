@@ -71,6 +71,87 @@ void rotateI420(jbyte *src_i420_data, jint width, jint height, jbyte *dst_i420_d
     }
 }
 
+//nv21旋转 旋转之后width和height相反
+void rotateNV21(jbyte *src_nv21_data, jint width, jint height, jbyte *dst_nv21_data, jint degree) {
+    jint src_nv21_y_size = width * height;
+    jint src_nv21_u_size = (width >> 1) * (height >> 1);
+
+    jbyte *src_nv21_y_data = src_nv21_data;
+    jbyte *src_nv21_u_data = src_nv21_data + src_nv21_y_size;
+    jbyte *src_nv21_v_data = src_nv21_data + src_nv21_y_size + src_nv21_u_size;
+
+    jbyte *dst_nv21_y_data = dst_nv21_data;
+    jbyte *dst_nv21_u_data = dst_nv21_data + src_nv21_y_size;
+    jbyte *dst_nv21_v_data = dst_nv21_data + src_nv21_y_size + src_nv21_u_size;
+    //要注意这里的width和height在旋转之后是相反的
+
+    int halfwidth = (width + 1) >> 1;
+    int halfheight = (height + 1) >> 1;
+
+    int src_stride_y;
+    int src_stride_u;
+    int src_stride_v;
+    int dst_stride_y;
+    int dst_stride_u;
+    int dst_stride_v;
+    if (degree == libyuv::kRotate90 || degree == libyuv::kRotate270) {
+        src_stride_y = width;
+        src_stride_u = width >> 1;
+        src_stride_v = width >> 1;
+        dst_stride_y = height;
+        dst_stride_u = height >> 1;
+        dst_stride_v = height >> 1;
+    } else {
+        src_stride_y = width;
+        src_stride_u = width >> 1;
+        src_stride_v = width >> 1;
+        dst_stride_y = width;
+        dst_stride_u = width >> 1;
+        dst_stride_v = width >> 1;
+    }
+
+//    libyuv::RotatePlane((uint8_t *) src_nv21_data, width, (uint8_t *) dst_nv21_data, width, width,
+//                        height, (libyuv::RotationMode) degree);
+    switch (degree) {
+        case libyuv::kRotate0:
+            // copy frame
+            break;
+        case libyuv::kRotate90:
+            libyuv::RotatePlane90((uint8_t *) src_nv21_y_data, src_stride_y, (uint8_t *) dst_nv21_y_data,
+                                  dst_stride_y, width, height);
+            libyuv::RotatePlane90((uint8_t *) src_nv21_u_data, src_stride_u,
+                                  (uint8_t *) dst_nv21_u_data, dst_stride_u, halfwidth,
+                                  halfheight);
+            libyuv::RotatePlane90((uint8_t *) src_nv21_v_data, src_stride_v,
+                                  (uint8_t *) dst_nv21_v_data, dst_stride_v, halfwidth,
+                                  halfheight);
+            break;
+        case libyuv::kRotate270:
+            libyuv::RotatePlane270((uint8_t *) src_nv21_y_data, src_stride_y, (uint8_t *) dst_nv21_y_data,
+                                   dst_stride_y, width, height);
+            libyuv::RotatePlane270((uint8_t *) src_nv21_u_data, src_stride_u,
+                                   (uint8_t *) dst_nv21_u_data, dst_stride_u, halfwidth,
+                                   halfheight);
+            libyuv::RotatePlane270((uint8_t *) src_nv21_v_data, src_stride_v,
+                                   (uint8_t *) dst_nv21_v_data, dst_stride_v, halfwidth,
+                                   halfheight);
+            break;
+        case libyuv::kRotate180:
+            libyuv::RotatePlane180((uint8_t *) src_nv21_y_data, src_stride_y, (uint8_t *) dst_nv21_y_data,
+                                   dst_stride_y, width, height);
+            libyuv::RotatePlane180((uint8_t *) src_nv21_u_data, src_stride_u,
+                                   (uint8_t *) dst_nv21_u_data, dst_stride_u, halfwidth,
+                                   halfheight);
+            libyuv::RotatePlane180((uint8_t *) src_nv21_v_data, src_stride_v,
+                                   (uint8_t *) dst_nv21_v_data, dst_stride_v, halfwidth,
+                                   halfheight);
+            break;
+        default:
+            break;
+    }
+
+}
+
 void RotateI420fff(jbyte *src_i420_data, jint width, jint height,
                    jbyte *dst_i420_data, jint degree) {
     jint I420_Y_Size = width * height;
