@@ -3,9 +3,12 @@ package com.example.tdylib;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Environment;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.tdylib.databinding.ActivityMainBinding;
+import com.tdy.ffmpeg.NativeLib;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Example of a call to a native method
         TextView tv = binding.sampleText;
-        tv.setText(stringFromJNI());
+        tv.setText(NativeLib.stringFromJNI());
+
     }
 
     /**

@@ -50,6 +50,5 @@ target_link_libraries(
         avformat
         avutil
         swresample
-        swscale
-        postproc)
+        swscale)
 

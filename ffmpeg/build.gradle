@@ -18,8 +18,20 @@ android {
                 cppFlags ""
             }
         }
-    }
+        ndk {
+            abiFilters "arm64-v8a", "armeabi-v7a"
+        }
 
+    }
+    packagingOptions {
+        pickFirst 'lib/arm64-v8a/libswscale.so'
+        pickFirst 'lib/arm64-v8a/libavcodec.so'
+        pickFirst 'lib/arm64-v8a/libavutil.so'
+        pickFirst 'lib/arm64-v8a/libavformat.so'
+        pickFirst 'lib/arm64-v8a/libavfilter.so'
+        pickFirst 'lib/arm64-v8a/libswresample.so'
+        pickFirst 'lib/arm64-v8a/libavdevice.so'
+    }
     buildTypes {
         release {
             minifyEnabled false

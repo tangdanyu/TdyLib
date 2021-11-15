@@ -19,5 +19,5 @@ public class NativeLib {
      * A native method that is implemented by the 'ffmpeg' native library,
      * which is packaged with this application.
      */
-    public native String stringFromJNI();
+    public static native String stringFromJNI();
 }
