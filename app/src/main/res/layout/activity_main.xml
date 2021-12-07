@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/tv_camera1"
+        android:id="@+id/btn_camera1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
@@ -27,14 +27,14 @@
         app:layout_constraintStart_toStartOf="@+id/sample_text"
         app:layout_constraintTop_toBottomOf="@+id/sample_text" />
     <Button
-        android:id="@+id/tv_opencv"
+        android:id="@+id/btn_opencv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:text="opencv"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/tv_camera1"
-        app:layout_constraintStart_toStartOf="@+id/tv_camera1"
-        app:layout_constraintTop_toBottomOf="@+id/tv_camera1" />
+        app:layout_constraintEnd_toEndOf="@+id/btn_camera1"
+        app:layout_constraintStart_toStartOf="@+id/btn_camera1"
+        app:layout_constraintTop_toBottomOf="@+id/btn_camera1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

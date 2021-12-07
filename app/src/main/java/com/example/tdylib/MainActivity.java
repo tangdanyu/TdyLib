@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.cameralib.MyLogUtil;
+import com.example.tdylib.opencv.OpencvSamplesActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,8 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initView() {
         tv = findViewById(R.id.sample_text);
-        camera1Btn = findViewById(R.id.tv_camera1);
-        opencvBtn = findViewById(R.id.tv_opencv);
+        camera1Btn = findViewById(R.id.btn_camera1);
+        opencvBtn = findViewById(R.id.btn_opencv);
     }
 
     private void initListener() {
@@ -68,12 +69,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
 
         switch (view.getId()) {
-            case R.id.tv_camera1:
+            case R.id.btn_camera1:
                 if (checkAndRequestPermissions(PERMISSIONS, 100)) {
                     startActivity(new Intent(this, Camera1Activity.class));
                 }
                 break;
-            case R.id.tv_opencv:
+            case R.id.btn_opencv:
+                startActivity(new Intent(this, OpencvSamplesActivity.class));
                 break;
         }
     }

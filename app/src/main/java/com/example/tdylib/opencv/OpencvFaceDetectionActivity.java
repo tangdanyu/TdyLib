@@ -1,14 +1,16 @@
-package com.example.tdylib;
+package com.example.tdylib.opencv;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class OpencvSamplesActivity extends AppCompatActivity {
+import com.example.tdylib.R;
+
+public class OpencvFaceDetectionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_opencv_samples);
+        setContentView(R.layout.activity_opencv_face_detection);
     }
 }

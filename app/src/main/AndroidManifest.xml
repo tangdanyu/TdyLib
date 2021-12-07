@@ -17,7 +17,31 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TdyLib">
         <activity
-            android:name=".OpencvSamplesActivity"
+            android:name=".opencv.OpencvTutorial3CameracontrolActivity"
+            android:exported="true" />
+        <activity
+            android:name=".opencv.OpencvTutorial2MixedprocessingActivity"
+            android:exported="true" />
+        <activity
+            android:name=".opencv.OpencvTutorial1CamerapreviewActivity"
+            android:exported="true" />
+        <activity
+            android:name=".opencv.OpencvImageManipulationsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".opencv.OpencvFaceDetectionActivity"
+            android:exported="true" />
+        <activity
+            android:name=".opencv.OpencvColorBlobDetectionActivity"
+            android:exported="true" />
+        <activity
+            android:name=".opencv.OpencvCameraCalibrationActivity"
+            android:exported="true" />
+        <activity
+            android:name=".opencv.OpencvPuzzle15Activity"
+            android:exported="true" />
+        <activity
+            android:name=".opencv.OpencvSamplesActivity"
             android:exported="true" />
         <activity
             android:name=".Camera1Activity"
