@@ -1,37 +1,138 @@
 package com.example.tdylib;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.Manifest;
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.tdylib.databinding.ActivityMainBinding;
-import com.tdy.ffmpeg.NativeLib;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.cameralib.MyLogUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private String TAG = "MainActivity";
+    //动态申请相机权限
+    private String[] PERMISSIONS = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA,
+            Manifest.permission.RECORD_AUDIO};
 
     // Used to load the 'tdylib' library on application startup.
     static {
         System.loadLibrary("tdylib");
     }
 
-    private ActivityMainBinding binding;
+
+    private TextView tv;
+    private Button camera1Btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        // Example of a call to a native method
-        TextView tv = binding.sampleText;
-        tv.setText(NativeLib.stringFromJNI());
-
+        setContentView(R.layout.activity_main);
+        initView();
+        initListener();
+        initData();
     }
 
+    private void initView() {
+        tv = findViewById(R.id.sample_text);
+        camera1Btn = findViewById(R.id.tv_camera1);
+    }
+
+    private void initListener() {
+        camera1Btn.setOnClickListener(this);
+    }
+
+    private void initData() {
+        tv.setText( stringFromJNI());
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+            case R.id.tv_camera1:
+                if (checkAndRequestPermissions(PERMISSIONS, 100)) {
+                    startActivity(new Intent(this, Camera1Activity.class));
+                }
+                break;
+        }
+    }
+
+    //动态申请权限
+    public boolean checkAndRequestPermissions(String[] permissions, int requestCode) {
+        List<String> requestPermission = new ArrayList<>();
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {//检查是否有了权限
+                //没有权限即动态申请
+                requestPermission.add(permission);
+            }
+        }
+        if (requestPermission.size() == 0) {
+            return true;
+        }
+
+        ActivityCompat.requestPermissions((Activity) this, requestPermission.toArray(new String[requestPermission.size()]), requestCode);
+        return false;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        boolean isAllGrant = true;
+
+        for (int i = 0; i < grantResults.length; i++) {
+            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                AlertDialog dialog = new AlertDialog.Builder(this).setTitle("提示").setMessage("权限被禁止。\n请在【设置-应用信息-权限】中重新授权").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        onPermissionReject(requestCode);
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        onPermissionReject(requestCode);
+                    }
+                }).create();
+                dialog.setCancelable(false);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
+
+                isAllGrant = false;
+                break;
+            }
+        }
+
+        if (isAllGrant) {
+            onPermissionGranted(requestCode);
+        }
+    }
+
+    //获得全部权限
+    public void onPermissionGranted(int requestCode) {
+        MyLogUtil.e(TAG, "已经获得权限");
+    }
+
+    //权限被拒绝
+    public void onPermissionReject(int requestCode) {
+        finish();
+    }
     /**
      * A native method that is implemented by the 'tdylib' native library,
      * which is packaged with this application.

@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tdylib">
-
+    <!--    请求相机功能 -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <!--    请求写入权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--    请求相机权限-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!--    请求录制音频权限-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TdyLib">
+        <activity
+            android:name=".Camera1Activity"
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
