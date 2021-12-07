@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView tv;
     private Button camera1Btn;
+    private Button opencvBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +52,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initView() {
         tv = findViewById(R.id.sample_text);
         camera1Btn = findViewById(R.id.tv_camera1);
+        opencvBtn = findViewById(R.id.tv_opencv);
     }
 
     private void initListener() {
         camera1Btn.setOnClickListener(this);
+        opencvBtn.setOnClickListener(this);
     }
 
     private void initData() {
@@ -69,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (checkAndRequestPermissions(PERMISSIONS, 100)) {
                     startActivity(new Intent(this, Camera1Activity.class));
                 }
+                break;
+            case R.id.tv_opencv:
                 break;
         }
     }
