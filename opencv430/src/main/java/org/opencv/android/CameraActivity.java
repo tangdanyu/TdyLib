@@ -13,7 +13,9 @@ import java.util.List;
 
 import static android.Manifest.permission.CAMERA;
 
-public class CameraActivity extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class CameraActivity extends AppCompatActivity {
 
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 200;
 
