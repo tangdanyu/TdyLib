@@ -11,7 +11,7 @@
         android:id="@+id/btn_puzzle15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="camera1"
+        android:text="puzzle15"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

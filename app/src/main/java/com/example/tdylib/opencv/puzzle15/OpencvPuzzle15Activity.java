@@ -1,6 +1,4 @@
-package com.example.tdylib.opencv;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.tdylib.opencv.puzzle15;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.example.tdylib.R;
+import com.example.cameralib.MyLogUtil;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraActivity;
@@ -28,7 +26,7 @@ public class OpencvPuzzle15Activity extends CameraActivity implements CameraBrid
     private static final String  TAG = "Puzzle15::Activity";
 
     private CameraBridgeViewBase mOpenCvCameraView;
-    private Puzzle15Processor    mPuzzle15;
+    private Puzzle15Processor mPuzzle15;
     private MenuItem mItemHideNumbers;
     private MenuItem             mItemStartNewGame;
 
@@ -43,9 +41,10 @@ public class OpencvPuzzle15Activity extends CameraActivity implements CameraBrid
             switch (status) {
                 case LoaderCallbackInterface.SUCCESS:
                 {
-                    Log.i(TAG, "OpenCV loaded successfully");
+                    MyLogUtil.e(TAG, "OpenCV loaded successfully");
 
                     /* Now enable camera view to start receiving frames */
+                    //现在启用“摄影机视图”以开始接收帧
                     mOpenCvCameraView.setOnTouchListener(OpencvPuzzle15Activity.this);
                     mOpenCvCameraView.enableView();
                 } break;

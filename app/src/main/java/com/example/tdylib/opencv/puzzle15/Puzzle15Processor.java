@@ -1,4 +1,4 @@
-package com.example.tdylib.opencv;
+package com.example.tdylib.opencv.puzzle15;
 
 import org.opencv.core.Core;
 import org.opencv.core.CvType;

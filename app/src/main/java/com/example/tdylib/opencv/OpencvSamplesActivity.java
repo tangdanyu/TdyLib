@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.tdylib.R;
+import com.example.tdylib.opencv.puzzle15.OpencvPuzzle15Activity;
 
 public class OpencvSamplesActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -37,7 +38,7 @@ public class OpencvSamplesActivity extends AppCompatActivity implements View.OnC
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_puzzle15:
-                startActivity(new Intent(this,OpencvPuzzle15Activity.class));
+                startActivity(new Intent(this, OpencvPuzzle15Activity.class));
                 break;
         }
     }
