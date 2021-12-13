@@ -17,25 +17,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TdyLib">
         <activity
-            android:name=".opencv.OpencvTutorial3CameracontrolActivity"
+            android:name=".opencv.colorblobdetect.OpencvColorBlobDetectionActivity"
             android:exported="true" />
         <activity
-            android:name=".opencv.OpencvTutorial2MixedprocessingActivity"
+            android:name=".opencv.tutorial3.OpencvTutorial3CameracontrolActivity"
             android:exported="true" />
         <activity
-            android:name=".opencv.OpencvTutorial1CamerapreviewActivity"
+            android:name=".opencv.tutorial2.OpencvTutorial2MixedprocessingActivity"
             android:exported="true" />
         <activity
-            android:name=".opencv.OpencvImageManipulationsActivity"
+            android:name=".opencv.tutorial1.OpencvTutorial1CamerapreviewActivity"
             android:exported="true" />
         <activity
-            android:name=".opencv.OpencvFaceDetectionActivity"
+            android:name=".opencv.imagemanipulations.OpencvImageManipulationsActivity"
             android:exported="true" />
         <activity
-            android:name=".opencv.OpencvColorBlobDetectionActivity"
+            android:name=".opencv.facedetect.OpencvFaceDetectionActivity"
             android:exported="true" />
         <activity
-            android:name=".opencv.camera_calibration.OpencvCameraCalibrationActivity"
+            android:name=".opencv.cameracalibration.OpencvCameraCalibrationActivity"
             android:exported="true" />
         <activity
             android:name=".opencv.puzzle15.OpencvPuzzle15Activity"

@@ -22,6 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    static {
+        System.loadLibrary("opencv_java4");
+
+    }
 
     private String TAG = "MainActivity";
     //动态申请相机权限
