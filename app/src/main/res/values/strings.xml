@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TdyLib</string>
 
-<!--    OpencvCameraCalibrationActivity-->
+    <!--    OpencvCameraCalibrationActivity-->
     <string name="action_calibrate">Calibrate</string>
     <string name="calibration">Calibration</string>
     <string name="undistortion">Undistortion</string>
