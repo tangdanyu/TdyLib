@@ -21,14 +21,17 @@ import org.opencv.core.Mat;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 将相机预览变成拼图
+ */
 public class OpencvPuzzle15Activity extends CameraActivity implements CameraBridgeViewBase.CvCameraViewListener, View.OnTouchListener {
 
-    private static final String  TAG = "Puzzle15::Activity";
+    private static final String  TAG = "OpencvPuzzle15Activity";
 
-    private CameraBridgeViewBase mOpenCvCameraView;
+    private CameraBridgeViewBase mOpenCvCameraView;//预览画面
     private Puzzle15Processor mPuzzle15;
-    private MenuItem mItemHideNumbers;
-    private MenuItem             mItemStartNewGame;
+    private MenuItem             mItemHideNumbers;//是否显示数字
+    private MenuItem             mItemStartNewGame;//重新开始游戏
 
 
     private int                  mGameWidth;
@@ -45,6 +48,7 @@ public class OpencvPuzzle15Activity extends CameraActivity implements CameraBrid
 
                     /* Now enable camera view to start receiving frames */
                     //现在启用“摄影机视图”以开始接收帧
+                    //加载成功后可以点击，预览可见
                     mOpenCvCameraView.setOnTouchListener(OpencvPuzzle15Activity.this);
                     mOpenCvCameraView.enableView();
                 } break;
@@ -126,6 +130,7 @@ public class OpencvPuzzle15Activity extends CameraActivity implements CameraBrid
     public void onCameraViewStarted(int width, int height) {
         mGameWidth = width;
         mGameHeight = height;
+        //将帧的大小传递
         mPuzzle15.prepareGameSize(width, height);
     }
 
@@ -143,6 +148,7 @@ public class OpencvPuzzle15Activity extends CameraActivity implements CameraBrid
 
         if (xpos >=0 && xpos <= mGameWidth && ypos >=0  && ypos <= mGameHeight) {
             /* click is inside the picture. Deliver this event to processor */
+            //点击图片里面。将此事件传递给处理器
             mPuzzle15.deliverTouchEvent(xpos, ypos);
         }
 

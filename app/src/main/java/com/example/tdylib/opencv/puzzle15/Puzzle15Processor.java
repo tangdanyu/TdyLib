@@ -14,12 +14,14 @@ import android.util.Log;
 /**
  * This class is a controller for puzzle game.
  * It converts the image from Camera into the shuffled image
+ * 这个类是一个益智游戏的控制器。
+ * 它将相机中的图像转换为混洗图像
  */
 public class Puzzle15Processor {
 
-    private static final int GRID_SIZE = 4;
-    private static final int GRID_AREA = GRID_SIZE * GRID_SIZE;
-    private static final int GRID_EMPTY_INDEX = GRID_AREA - 1;
+    private static final int GRID_SIZE = 4;//一行格子数
+    private static final int GRID_AREA = GRID_SIZE * GRID_SIZE;//有多少个格子
+    private static final int GRID_EMPTY_INDEX = GRID_AREA - 1;//空白的格子数
     private static final String TAG = "Puzzle15Processor";
     private static final Scalar GRID_EMPTY_COLOR = new Scalar(0x33, 0x33, 0x33, 0xFF);
 
@@ -27,7 +29,7 @@ public class Puzzle15Processor {
     private int[]   mTextWidths;
     private int[]   mTextHeights;
 
-    private Mat mRgba15;
+    private Mat mRgba15;//rgba原始帧
     private Mat[] mCells15;
     private boolean mShowTileNumbers = true;
 
@@ -42,6 +44,7 @@ public class Puzzle15Processor {
     }
 
     /* this method is intended to make processor prepared for a new game */
+    /* 此方法旨在使处理器为新游戏做好准备 */
     public synchronized void prepareNewGame() {
         do {
             shuffle(mIndexes);
@@ -51,6 +54,8 @@ public class Puzzle15Processor {
     /* This method is to make the processor know the size of the frames that
      * will be delivered via puzzleFrame.
      * If the frames will be different size - then the result is unpredictable
+     * 此方法是让处理器知道要处理的帧的大小将通过拼图框交付。
+     * 如果帧大小不同，则结果不可预测
      */
     public synchronized void prepareGameSize(int width, int height) {
         mRgba15 = new Mat(height, width, CvType.CV_8UC4);
@@ -58,7 +63,7 @@ public class Puzzle15Processor {
 
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
-                int k = i * GRID_SIZE + j;
+                int k = i * GRID_SIZE + j;//第i行第j个
                 mCells15[k] = mRgba15.submat(i * height / GRID_SIZE, (i + 1) * height / GRID_SIZE, j * width / GRID_SIZE, (j + 1) * width / GRID_SIZE);
             }
         }
@@ -70,8 +75,9 @@ public class Puzzle15Processor {
         }
     }
 
-    /* this method to be called from the outside. it processes the frame and shuffles
-     * the tiles as specified by mIndexes array
+    /* this method to be called from the outside.
+     * it processes the frame and shuffles the tiles as specified by mIndexes array
+     * 此方法由从外部调用。它处理帧并按照mIndexes数组的指定洗牌
      */
     public synchronized Mat puzzleFrame(Mat inputPicture) {
         Mat[] cells = new Mat[GRID_AREA];
@@ -113,10 +119,12 @@ public class Puzzle15Processor {
         return mRgba15;
     }
 
+    //是否显示数字
     public void toggleTileNumbers() {
         mShowTileNumbers = !mShowTileNumbers;
     }
 
+    //点击小方块的响应事件
     public void deliverTouchEvent(int x, int y) {
         int rows = mRgba15.rows();
         int cols = mRgba15.cols();
@@ -159,6 +167,7 @@ public class Puzzle15Processor {
         }
     }
 
+    //画网格
     private void drawGrid(int cols, int rows, Mat drawMat) {
         for (int i = 1; i < GRID_SIZE; i++) {
             Imgproc.line(drawMat, new Point(0, i * rows / GRID_SIZE), new Point(cols, i * rows / GRID_SIZE), new Scalar(0, 255, 0, 255), 3);
@@ -166,6 +175,7 @@ public class Puzzle15Processor {
         }
     }
 
+    //洗牌
     private static void shuffle(int[] array) {
         for (int i = array.length; i > 1; i--) {
             int temp = array[i - 1];
@@ -175,6 +185,7 @@ public class Puzzle15Processor {
         }
     }
 
+    //是否已经解开
     private boolean isPuzzleSolvable() {
 
         int sum = 0;
