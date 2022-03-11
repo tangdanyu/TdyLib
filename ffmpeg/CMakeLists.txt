@@ -7,7 +7,9 @@ include_directories(src/main/cpp/include)
 add_library(
         native-lib
         SHARED
-        src/main/cpp/ffmpeg.cpp)
+        src/main/cpp/ffmpeg.cpp
+        src/main/cpp/VideoRecorder.cpp
+)
 add_library(avcodec SHARED IMPORTED)
 set_target_properties(avcodec
         PROPERTIES IMPORTED_LOCATION
